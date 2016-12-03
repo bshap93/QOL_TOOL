@@ -12,7 +12,12 @@ Rails.application.routes.draw do
 
   get 'logout', to: 'sessions#destroy', as: 'logout'
 
-  resources :users
+  resources :users, except: [:index]
+
+  resources :questionnaires do
+    resources :questions
+    resources :results, only: [:index, :show]
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
