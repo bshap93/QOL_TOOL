@@ -1,0 +1,12 @@
+<h2>Welcome to the Quality of Life Tool</h2>
+<% if !user_signed_in? %>
+  <%= link_to "Log in", new_user_session_path %> <hr>
+  <%= link_to "or Sign up", new_user_registration_path %>
+<% else %>
+  <strong>Welcome, <%= current_user.name %></strong> <hr>
+  <a href="#">Take the Quality of Life Assessment</a> <hr>
+  <%= link_to "See My Questions" %> <hr>
+  <%= link_to "Create a New Question" %> <hr>
+  <%= link_to "See my Past Results" %> <hr>
+  <%= link_to "Logout", logout_path %>
+<% end %>
