@@ -13,6 +13,6 @@ class QuestionsController < ApplicationController
   end
 
   def update_questionnaire
-    raise params
+    raise params.inspect
   end
 end
