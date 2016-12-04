@@ -24,3 +24,7 @@
 #error_explanation {
   color: red;
 }
+
+.add_question_to_questionnaire {
+  color:green;
+}

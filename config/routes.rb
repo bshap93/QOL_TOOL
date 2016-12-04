@@ -12,6 +12,10 @@ Rails.application.routes.draw do
 
   get 'logout', to: 'sessions#destroy', as: 'logout'
 
+  get 'questionnaire_select/:id', to: 'questions#questionnaire_select', as: 'questionnaire_select'
+
+  post 'questions/:id/update_questionnaire', to: 'questions#update_questionnaire', as: 'update_questionnaire'
+
   resources :users, except: [:index]
 
   resources :questionnaires do

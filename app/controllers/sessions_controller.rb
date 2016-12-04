@@ -4,20 +4,17 @@ class SessionsController < ApplicationController
   end
 
   def create
-    begin
-      @user = User.find_by(name: params[:name])
-      return head(:forbidden) unless @user.authenticate(params[:password])
-      session[:user_id] = @user.id
-      redirect_to root_path
-    rescue NoMethodError
-      flash[:error] = "Invalid email and password"
-      redirect_to new_user_session_path
-    end
-
+    user = User.find_by(email: params[:email])
+    user = user.try(:authenticate, params[:password])
+    return redirect_to(controller: 'sessions', action: 'new') unless user
+    session[:user_id] = user.id
+    @user = user
+    redirect_to controller: 'welcome', action: 'index'
   end
 
+
   def destroy
-    session.clear
+    session.delete :user_id
     redirect_to root_path
   end
 

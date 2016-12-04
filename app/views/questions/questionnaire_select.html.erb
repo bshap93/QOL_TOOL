@@ -1,0 +1,10 @@
+<% if Questionnaire.my_questionnaires(current_user.id).count > 0  %>
+  <%= form_for @question, :url => update_questionnaire_path(@question.id) do |f| %>
+    <%= f.collection_select :questionnaire_id, Questionnaire.my_questionnaires(current_user.id), :id, :name, prompt: true %>
+    <%= f.submit %>
+  <% end %>
+<% else %>
+  <h4>You have not created any custom questionnaires.</h4>
+  <h4><%= link_to "Create a questionnaire", new_questionnaire_path %></h4>
+  <%= link_to "Or return to the question list" %>
+<% end %>

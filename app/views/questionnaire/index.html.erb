@@ -1,0 +1,6 @@
+<h2>All Questionnaires</h2>
+
+<% @questionnaires.each do |questionnaire| %>
+  <%= content_tag(:p, questionnaire.name )%>
+  <%= content_tag(:p, questionnaire.user.name )%>
+<% end %>

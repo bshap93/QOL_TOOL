@@ -10,17 +10,27 @@
   </thead>
 
   <tbody>
-    <% @questions.each do |question| %>
-      <tr>
-        <td>Body: <%= question.body %></td>
-        <td>Category: <%= question.category %></td>
-        <td><%= link_to 'Show', questionnaire_question_path(question.questionnaire.id, question.id) %></td>
-        <% if question.questionnaire.id != 1 %>
-          <td><%= link_to 'Edit', edit_questionnaire_question(question.questionnaire.id, question.id) %></td>
-          <td><%= link_to 'Destroy', question, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <% @questions.reverse_each do |question| %>
+      <div class="question_content">
+        <% if question.questionnaire %>
+          <!-- true -->
+          <tr>
+            <td>In the past 7 days, I <%= question.body %></td>
+            <td>Category: <%= question.category %></td>
+            <td><%= link_to 'Show', questionnaire_question_path(question.questionnaire.id, question.id) %></td>
+            <% if question.questionnaire.id != 1 %>
+              <td><%= link_to 'Edit', edit_questionnaire_question(question.questionnaire.id, question.id) %></td>
+              <td><%= link_to 'Destroy', question, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <% end %>
+
+          </tr>
+        <% else %>
+          <td class="add_question_to_questionnaire">Body: <%= question.body %></td>
+          <td class="add_question_to_questionnaire">Category: <%= question.category %></td>
+          <td class="add_question_to_questionnaire"><%= link_to "Add this question to a questionnaire", questionnaire_select_path(question) %></td>
         <% end %>
-      </tr>
-    <% end %>
+      <% end %>
+    </div>
   </tbody>
 </table>
 
