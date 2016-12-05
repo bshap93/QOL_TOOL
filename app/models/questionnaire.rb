@@ -14,4 +14,9 @@ class Questionnaire < ActiveRecord::Base
   def self.all_questionnaires(current_user_id)
     Questionnaire.where("(user_id = #{current_user_id}) or (id = 1)")
   end
+
+  def return_questions_by_questionnaire
+    Question.where("questionnaire_id = #{self.id}")
+  end
+
 end

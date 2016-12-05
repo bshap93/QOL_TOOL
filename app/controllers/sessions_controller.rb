@@ -1,14 +1,14 @@
 class SessionsController < ApplicationController
 
   def new
+    @user = User.new
   end
 
   def create
-    user = User.find_by(email: params[:email])
-    user = user.try(:authenticate, params[:password])
+    user = User.find_by(email: params[:user][:email])
+    user = user.try(:authenticate, params[:user][:password])
     return redirect_to(controller: 'sessions', action: 'new') unless user
     session[:user_id] = user.id
-    @user = user
     redirect_to controller: 'welcome', action: 'index'
   end
 

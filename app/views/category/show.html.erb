@@ -1,0 +1,23 @@
+<h2><%= @category.name %> Factors</h2>
+<h4>Over the past 7 days, I...</h4>
+<% count = 1 %>
+<%= form_tag(record_category_path, method: :post) do %>
+  <% @questions.each do |question| %>
+    <form id="<%= @count %>">
+
+
+
+      <%= question.body %>
+
+
+      <%= select_tag "rating", options_from_collection_for_select(Rating.all, :id, :designation) %>
+      <hr>
+
+
+
+    </form>
+    <% count += 1 %>
+
+  <% end %>
+  <%= submit_tag "Next" %>
+<% end %>

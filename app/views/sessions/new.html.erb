@@ -1,8 +1,17 @@
-<h1>Log in</h1>
-<%= form_tag create_user_session_path, method: :post do %>
-  Email:
-  <%= text_field_tag :email, nil, id: 'user[email]' %>
-  Password:
-  <%= password_field_tag :password, nil, id: 'user[password]' %>
-  <%= submit_tag "Sign In" %>
+<h2>Log in</h2>
+
+<%= form_for(@user, url: create_user_session_path) do |f| %>
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password %><br />
+    <%= f.password_field :password, autocomplete: "off" %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Log in" %>
+  </div>
 <% end %>

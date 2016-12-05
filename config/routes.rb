@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+
   root 'welcome#index'
 
   get 'sessions/new', as:'new_user_session'
@@ -19,6 +20,10 @@ Rails.application.routes.draw do
   delete '/questionnaires/:questionnaire_id/questions/:id', to: 'questions#destroy', as: 'destroy_question'
 
   post '/results/create', to: 'results#create', as: 'create_result'
+
+  get '/questionnaires/:questionnaire_id/category/:id/show', to: 'category#show', as: 'display_category'
+
+  post '/questionnaires/:questionnaire_id/category/:id', to: 'category#record', as: 'record_category'
 
   resources :users, except: [:index]
 
