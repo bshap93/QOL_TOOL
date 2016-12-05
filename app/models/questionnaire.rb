@@ -11,4 +11,7 @@ class Questionnaire < ActiveRecord::Base
     Questionnaire.where("user_id = #{current_user_id}")
   end
 
+  def self.all_questionnaires(current_user_id)
+    Questionnaire.where("(user_id = #{current_user_id}) or (id = 1)")
+  end
 end

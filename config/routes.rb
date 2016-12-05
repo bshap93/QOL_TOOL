@@ -16,11 +16,15 @@ Rails.application.routes.draw do
 
   patch '/questions/:id/update_questionnaire', to: 'questions#update_questionnaire', as: 'update_questionnaire'
 
+  delete '/questionnaires/:questionnaire_id/questions/:id', to: 'questions#destroy', as: 'destroy_question'
+
+  post '/results/create', to: 'results#create', as: 'create_result'
+
   resources :users, except: [:index]
 
   resources :questionnaires do
-    resources :questions
-    resources :results, only: [:index, :show]
+    resources :questions, except: [:destroy]
+    resources :results, except: [:create]
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

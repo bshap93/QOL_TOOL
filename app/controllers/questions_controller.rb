@@ -8,11 +8,22 @@ class QuestionsController < ApplicationController
     @questionnaire = Questionnaire.find(params[:questionnaire_id])
   end
 
-  def questionnaire_select
+  def destroy
     @question = Question.find(params[:id])
+    @questionnaire = @question.questionnaire
+    @question.delete
+    redirect_to questionnaire_questions_path(@questionnaire.id)
+  end
+
+  def questionnaire_select
+
   end
 
   def update_questionnaire
-    raise params.inspect
+    @questionnaire = Questionnaire.find(params[:question][:questionnaire_id])
+    @question = Question.find(params[:id])
+    @question.questionnaire = @questionnaire
+
+    redirect_to questionnaire_questions_path(@questionnaire.id)
   end
 end

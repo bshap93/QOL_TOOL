@@ -6,10 +6,17 @@ class QuestionnairesController < ApplicationController
 
   def new
     @questionnaire = Questionnaire.new
+    @user = current_user
   end
 
   def create
-    @questionnaire = Questionnaire.new(questionnaire_params)
+    if params[:questionnaire][:default] == "1"
+      @questionnaire = Questionnaire.first.deep_clone include: [:questions, :results]
+    else
+      @questionnaire = Questionnaire.new
+    end
+    @questionnaire.name = params[:questionnaire][:name]
+    @questionnaire.default = params[:questionnaire][:default]
     @questionnaire.user = current_user
     if @questionnaire.save
       redirect_to questionnaire_path(@questionnaire)
