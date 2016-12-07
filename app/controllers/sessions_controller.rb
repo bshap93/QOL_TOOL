@@ -1,5 +1,4 @@
 class SessionsController < ApplicationController
-  before_action :require_login, except: [:new, :create]
   def new
     @user = User.new
   end
@@ -17,5 +16,21 @@ class SessionsController < ApplicationController
     session.delete :user_id
     redirect_to root_path
   end
+
+  def create_from_facebook
+    begin
+      @user = User.from_omniauth(request.env['omniauth.auth'])
+      session[:user_id] = @user.id
+      flash[:success] = "Welcome, #{@user.name}!"
+    rescue
+      flash[:warning] = "There was an error while trying to authenticate you..."
+    end
+    redirect_to root_path
+  end
+
+  def auth
+    request.env['omniauth.auth']
+  end
+
 
 end

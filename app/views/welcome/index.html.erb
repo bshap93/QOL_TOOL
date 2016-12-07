@@ -2,6 +2,7 @@
 <% if !user_signed_in? %>
   <%= link_to "Log in", new_user_session_path %> <hr>
   <%= link_to "or Sign up", new_user_registration_path %>
+  <li><%= link_to 'Facebook', '/auth/facebook' %></li>
 <% else %>
   <strong>Welcome, <%= current_user.name %></strong> <hr>
   <%= form_for @result, :url => create_result_path do |f| %>
@@ -13,5 +14,5 @@
   <%= link_to "All my Questionnaires", questionnaires_path %> <hr>
   <%= link_to "Create a New Questionnaire", new_questionnaire_path %> <hr>
   <%= link_to "See my Past Results", questionnaire_results_path(Questionnaire.last) %> <hr>
-  <%= link_to "Logout", logout_path %>
+  <%= link_to "signout", signout_path %>
 <% end %>
