@@ -2,6 +2,7 @@ class QuestionsController < ApplicationController
   before_action :require_login
   def index
     @questions = Question.where("(questionnaire_id = #{params[:questionnaire_id]})")
+    @questionnaire = Questionnaire.find(params[:questionnaire_id])
   end
 
   def new
@@ -52,9 +53,6 @@ class QuestionsController < ApplicationController
     redirect_to questionnaire_questions_path(@questionnaire.id)
   end
 
-  def questionnaire_select
-
-  end
 
   def update_questionnaire
     @questionnaire = Questionnaire.find(params[:question][:questionnaire_id])

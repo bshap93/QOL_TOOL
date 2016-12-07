@@ -4,9 +4,21 @@ class CategoryController < ApplicationController
 
 
   def show
+    if @@category_count > 14
+      @@category_count = 1
+    end
     @category = Category.find(@@category_count)
+    @result = Result.find(session[:result_id])
     @questionnaire = Questionnaire.find(params[:questionnaire_id])
     @questions = @category.return_questions_by_category.merge(@questionnaire.return_questions_by_questionnaire)
+    if @questions.empty?
+      @@category_count += 1
+      unless @@category_count > 14
+        redirect_to display_category_path(@questionnaire, Category.find(@@category_count))
+      else
+        redirect_to questionnaire_result_path(@questionnaire, Result.find(session[:result_id]))
+      end
+    end
     @category_rating = @category.category_rating.create(rating: 0)
     @rating = Rating.first
     @count = 1
