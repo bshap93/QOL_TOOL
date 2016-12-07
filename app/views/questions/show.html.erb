@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <p><strong>This question: </strong>belongs to the <strong><%= @question.category %></strong> category</p>
-<p>and the <strong><%= @questionnaire.name %></strong> questionnaire</p>
+<p>and the <strong><%= @questionnaire.name %></strong> questionnaire</p> <%= link_to "Edit" %> <%= link_to "Destroy" %>
 
 <%= link_to 'Edit', edit_questionnaire_question_path(@questionnaire, @question) %> |
 <%= link_to 'Back', questionnaire_questions_path(@questionnaire) %>

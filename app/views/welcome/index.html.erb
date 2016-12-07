@@ -11,7 +11,8 @@
   <% end %>
   <hr>
   <%= link_to "See My Questions", questionnaire_questions_path(Questionnaire.last) %> <hr>
-  <%= link_to "Create a New Question" %> <hr>
+  <%= link_to "Create a New Questionnaire", new_questionnaire_path %> <hr>
+  <%= link_to "All my Questionnaires", questionnaires_path %> <hr>
   <%= link_to "See my Past Results", questionnaire_results_path(Questionnaire.last) %> <hr>
   <%= link_to "Logout", logout_path %>
 <% end %>

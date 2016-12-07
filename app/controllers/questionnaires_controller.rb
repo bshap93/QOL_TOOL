@@ -10,6 +10,14 @@ class QuestionnairesController < ApplicationController
     @user = current_user
   end
 
+  def edit
+
+  end
+
+  def update
+
+  end
+
   def create
     if params[:questionnaire][:default] == "1"
       @questionnaire = Questionnaire.first.deep_clone include: [:questions, :results]

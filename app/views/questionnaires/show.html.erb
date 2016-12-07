@@ -5,8 +5,9 @@
 <% else %>
   <% @questionnaire.questions.each do |question| %>
     <p>Question: <%= question.body %></p>
-    <p><strong>This question: </strong>belongs to the <strong><%= question.category %></strong> category</p>
+    <p><strong>This question: </strong>belongs to the <strong><%= question.category.name %></strong> category</p>
     <p>and the <strong><%= @questionnaire.name %></strong> questionnaire</p>
+    <%= link_to "Edit", edit_questionnaire_question_path(@questionnaire, question) %>  |  <%= link_to "Destroy", destroy_question_path(@questionnaire, question) %>
   <% end %>
 <% end %>
 <%= link_to "Make a new question", new_questionnaire_question_path(@questionnaire) %>

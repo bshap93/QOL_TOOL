@@ -5,12 +5,26 @@ class QuestionsController < ApplicationController
   end
 
   def new
-    @question = Question.create
+    @question = Question.new
     @questionnaire = Questionnaire.find(params[:questionnaire_id])
   end
 
   def create
-    binding.pry
+    @question = Question.new
+    @question.body = params[:question][:body]
+    @question.category = Category.find(params[:question][:category_id])
+    @question.questionnaire = Questionnaire.find(params[:questionnaire_id])
+    @question.save
+    redirect_to questionnaire_path(params[:questionnaire_id])
+  end
+
+  def edit
+    @question = Question.find(params[:id])
+    @questionnaire = Questionnaire.find(params[:questionnaire_id])
+  end
+
+  def update
+    raise params.inspect
   end
 
 
@@ -36,5 +50,10 @@ class QuestionsController < ApplicationController
     @question.questionnaire = @questionnaire
 
     redirect_to questionnaire_questions_path(@questionnaire.id)
+  end
+
+  private
+  def question_params
+    params.require(:question).permit(:body, :category_id)
   end
 end
