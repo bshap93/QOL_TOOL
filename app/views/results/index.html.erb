@@ -1,0 +1,12 @@
+<h2>Your Results</h2>
+<tbody>
+  <% @results.reverse_each do |result| %>
+    <tr>
+        <td><%= result.questionnaire.name %></td><br>
+        <td>Total Score: <%= result.rating %></td><br>
+        <td><%= link_to result.created_at, result_path(result.questionnaire, result) %></td>
+    </tr>
+    <hr>
+
+  <% end %>
+</tbody>

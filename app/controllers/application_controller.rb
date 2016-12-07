@@ -14,4 +14,8 @@ class ApplicationController < ActionController::Base
   def user_signed_in?
     current_user != nil
   end
+
+  def require_login
+    redirect_to '/' unless session.include? :user_id
+  end
 end

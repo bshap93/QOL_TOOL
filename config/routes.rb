@@ -23,13 +23,18 @@ Rails.application.routes.draw do
 
   get '/questionnaires/:questionnaire_id/category/:id/show', to: 'category#show', as: 'display_category'
 
-  post '/questionnaires/:questionnaire_id/category/:id', to: 'category#record', as: 'record_category'
+  patch '/questionnaires/:questionnaire_id/category/:id', to: 'category#record', as: 'record_category'
 
-  resources :users, except: [:index]
+  get '/questionnaires/:questionnaire_id/results/:id/display', to: 'results#display', as: "questionnaire_result"
+
+  get '/questionnaires/:questionnaire_id/results/:id', to: 'results#show', as: "result"
+
+
+  resources :users
 
   resources :questionnaires do
     resources :questions, except: [:destroy]
-    resources :results, except: [:create]
+    resources :results, except: [:create, :show]
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

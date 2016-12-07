@@ -1,0 +1,9 @@
+<h2>Results of the <%= @result.questionnaire.name %> Questionnaire</h2>
+From 4 to 20, your <%= @result.questionnaire.name %> results are:
+<hr>
+<% @categories.each do |category| %>
+  <%= category.name %>: <%= CategoryRating.find(category.id).rating %>
+  <hr>
+<% end %>
+Total: <%= @result.rating %> <hr>
+<%= link_to "Results index", questionnaire_results_path(@result.questionnaire) %>

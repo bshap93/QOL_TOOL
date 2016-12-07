@@ -1,3 +1,0 @@
-class CategoryRatingController < ApplicationController
-
-end

@@ -1,7 +1,18 @@
 class QuestionsController < ApplicationController
+  before_action :require_login
   def index
     @questions = Question.where("(questionnaire_id = 1) or (user_id = #{current_user.id})")
   end
+
+  def new
+    @question = Question.create
+    @questionnaire = Questionnaire.find(params[:questionnaire_id])
+  end
+
+  def create
+    binding.pry
+  end
+
 
   def show
     @question = Question.find(params[:id])

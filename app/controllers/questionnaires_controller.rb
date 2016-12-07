@@ -1,4 +1,5 @@
 class QuestionnairesController < ApplicationController
+  before_action :require_login
   def index
     current_user_id = current_user.id
     @questionnaires = Questionnaire.my_questionnaires(current_user_id)

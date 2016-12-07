@@ -4,7 +4,6 @@ class Questionnaire < ActiveRecord::Base
   has_many :results
 
   validates :name, presence: true
-  validates :default, presence: true
   validates :user, presence: true
 
   def self.my_questionnaires(current_user_id)

@@ -1,23 +1,22 @@
 <h2><%= @category.name %> Factors</h2>
 <h4>Over the past 7 days, I...</h4>
-<% count = 1 %>
-<%= form_tag(record_category_path, method: :post) do %>
+<%= form_for @category_rating, url: record_category_path do |f| %>
+
   <% @questions.each do |question| %>
-    <form id="<%= @count %>">
 
 
 
-      <%= question.body %>
+
+        <%= question.body %>
+        <%= fields_for :ratings do |rating| %>
+          <%= select_tag :rating, options_from_collection_for_select(Rating.all, :id, :designation), name: "rating_#{@count}" %>
+        <% end %>
+        <hr>
 
 
-      <%= select_tag "rating", options_from_collection_for_select(Rating.all, :id, :designation) %>
-      <hr>
-
-
-
-    </form>
-    <% count += 1 %>
+        <% @count += 1 %>
 
   <% end %>
-  <%= submit_tag "Next" %>
+  <%= hidden_field_tag "count", @count %>
+  <%= f.submit "Next" %>
 <% end %>

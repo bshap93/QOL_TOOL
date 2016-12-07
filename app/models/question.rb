@@ -1,7 +1,7 @@
 class Question < ActiveRecord::Base
   belongs_to :questionnaire
   belongs_to :user
-  has_one :category
+  belongs_to :category
 
 
 end
