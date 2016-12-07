@@ -18,4 +18,22 @@ class Questionnaire < ActiveRecord::Base
     Question.where("questionnaire_id = #{self.id}")
   end
 
+  def self.default_clone
+    self.first.deep_clone include: [:questions, :results]
+  end
+
+  def combine(second)
+    self.name = second.name
+    self.user_id = second.user_id
+    self.default = second.default
+    self.results.each do |result|
+      second.results << result
+    end
+    self.questions.each do |question|
+      second.questions << question
+    end
+    second.save
+    return second
+  end
+
 end

@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
   before_action :require_login
   def index
-    @questions = Question.where("(questionnaire_id = 1) or (user_id = #{current_user.id})")
+    @questions = Question.where("(questionnaire_id = #{params[:questionnaire_id]})")
   end
 
   def new
@@ -14,8 +14,12 @@ class QuestionsController < ApplicationController
     @question.body = params[:question][:body]
     @question.category = Category.find(params[:question][:category_id])
     @question.questionnaire = Questionnaire.find(params[:questionnaire_id])
-    @question.save
-    redirect_to questionnaire_path(params[:questionnaire_id])
+    if @question.save
+      redirect_to questionnaire_path(params[:questionnaire_id])
+    else
+      flash[:error] = "Invalid Question"
+      redirect_to root_path
+    end
   end
 
   def edit
@@ -24,7 +28,15 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    raise params.inspect
+    @question = Question.find(params[:id])
+    @question.body = params[:question][:body]
+    @question.category = Category.find(params[:question][:category_id])
+    @question.questionnaire = Questionnaire.find(params[:questionnaire_id])
+    if @question.save
+      redirect_to questionnaire_path(params[:questionnaire_id])
+    else
+      flash[:error] = "Invalid Question"
+    end
   end
 
 

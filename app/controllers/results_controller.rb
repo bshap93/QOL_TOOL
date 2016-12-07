@@ -19,12 +19,10 @@ class ResultsController < ApplicationController
   def display
     @questionnaire = Questionnaire.find(params[:questionnaire_id])
     @result = Result.find(params[:id])
-    binding.pry
     @categories = Category.all
     @category_ratings = @result.category_ratings
     @category_ratings.each do |category_rating|
       @result.category_ratings << category_rating
-      binding.pry
       @result.rating += category_rating.rating
     end
     @result.save

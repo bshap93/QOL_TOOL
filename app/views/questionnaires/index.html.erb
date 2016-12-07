@@ -3,5 +3,5 @@
 <% @questionnaires.each do |questionnaire| %>
   <%= content_tag(:p, questionnaire.name )%>
   <%= content_tag(:p, "User: #{questionnaire.user.name}" )%>
-  <%= link_to "Edit", edit_questionnaire_path(questionnaire) %><hr>
+  <%= link_to "Edit", edit_questionnaire_path(questionnaire) %> | <%= link_to "Go to Questions", questionnaire_questions_path(questionnaire) %><hr>
 <% end %>

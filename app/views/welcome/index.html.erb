@@ -6,13 +6,12 @@
   <strong>Welcome, <%= current_user.name %></strong> <hr>
   <%= form_for @result, :url => create_result_path do |f| %>
     <%= f.label "Choose a questionnaire (Quality of Life Recommmended)" %><br>
-    <%= f.collection_select :questionnaire_id, Questionnaire.all_questionnaires(current_user.id), :id, :name, prompt: true %>
+    <%= f.collection_select :questionnaire_id, Questionnaire.all_questionnaires(current_user.id), :id, :name, {:prompt => 'Choose a questionnaire'}, {:required => true} %>
     <%= f.submit "Take Questionnaire" %>
   <% end %>
   <hr>
-  <%= link_to "See My Questions", questionnaire_questions_path(Questionnaire.last) %> <hr>
-  <%= link_to "Create a New Questionnaire", new_questionnaire_path %> <hr>
   <%= link_to "All my Questionnaires", questionnaires_path %> <hr>
+  <%= link_to "Create a New Questionnaire", new_questionnaire_path %> <hr>
   <%= link_to "See my Past Results", questionnaire_results_path(Questionnaire.last) %> <hr>
   <%= link_to "Logout", logout_path %>
 <% end %>

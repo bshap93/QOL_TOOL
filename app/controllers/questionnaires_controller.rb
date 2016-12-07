@@ -11,16 +11,30 @@ class QuestionnairesController < ApplicationController
   end
 
   def edit
-
+    @questionnaire = Questionnaire.find(params[:id])
+    @user = current_user
   end
 
   def update
-
+    if params[:questionnaire][:default] == "1" && params[:id] != "1"
+      binding.pry
+      @questionnaire = Questionnaire.default_clone.combine(Questionnaire.find(params[:id]))
+    else
+      @questionnaire = Questionnaire.find(params[:id])
+    end
+    @questionnaire.name = params[:questionnaire][:name]
+    @questionnaire.default = params[:questionnaire][:default]
+    @questionnaire.user = current_user
+    if @questionnaire.save
+      redirect_to questionnaire_path(@questionnaire)
+    else
+      redirect_to edit_questionnaire_path(@questionnaire)
+    end
   end
 
   def create
     if params[:questionnaire][:default] == "1"
-      @questionnaire = Questionnaire.first.deep_clone include: [:questions, :results]
+      @questionnaire = Questionnaire.default_clone
     else
       @questionnaire = Questionnaire.new
     end
