@@ -1,9 +1,9 @@
 module ApplicationHelper
 
   def current_user
-    if session[:user_id] != nil
+    begin
       return User.find(session[:user_id])
-    else
+    rescue
       return nil
     end
   end
