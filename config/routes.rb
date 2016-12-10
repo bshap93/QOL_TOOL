@@ -3,11 +3,6 @@ Rails.application.routes.draw do
 
   root 'welcome#index'
 
-  get '/auth/:provider/callback' => 'sessions#create_from_facebook'
-
-
-  get 'sessions/new', as:'new_user_session'
-
   get 'users/new', as: 'new_user_registration'
 
   get 'users/create', as: 'create_new_user'
@@ -28,7 +23,6 @@ Rails.application.routes.draw do
 
   get '/questionnaires/:questionnaire_id/results/:id', to: 'results#show', as: "result"
 
-  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
   resources :users
 
@@ -36,14 +30,15 @@ Rails.application.routes.draw do
     resources :questions, except: [:destroy]
     resources :results, except: [:create, :show]
   end
+  post 'sessions/create_manual', as: 'create_user_session'
 
-  get 'auth/:provider', to: 'sessions#create_from_facebook'
-
-  get 'auth/failure', to: redirect('/')
   get 'signout', to: 'sessions#destroy', as: 'signout'
 
-  post 'sessions/create', as: 'create_user_session'
-  get '/auth/:provider/callback', to: 'sessions#create_from_facebook'
+  get   '/login', :to => 'sessions#new', :as => :login
+  match '/auth/:provider/callback', :to => 'sessions#create', via: [:get, :post]
+  match '/auth/failure', :to => 'sessions#failure', via: [:get, :post]
+
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

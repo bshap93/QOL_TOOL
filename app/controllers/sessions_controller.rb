@@ -4,6 +4,20 @@ class SessionsController < ApplicationController
   end
 
   def create
+    user = User.find_or_create_by(:uid => auth['uid']) do |u|
+      u.name = auth['info']['name']
+      u.email = auth['info']['email']
+      u.password = auth['uid']
+    end
+    session[:user_id] = user.id
+    redirect_to root_path
+  end
+
+  def auth
+    request.env['omniauth.auth']
+  end
+
+  def create_manual
     user = User.find_by(email: params[:user][:email])
     user = user.try(:authenticate, params[:user][:password])
     return redirect_to(controller: 'sessions', action: 'new') unless user
@@ -17,16 +31,6 @@ class SessionsController < ApplicationController
     redirect_to root_path
   end
 
-  def create_from_facebook
-    begin
-      @user = User.from_omniauth(request.env['omniauth.auth'])
-      session[:user_id] = @user.id
-      flash[:success] = "Welcome, #{@user.name}!"
-    rescue
-      flash[:warning] = "There was an error while trying to authenticate you..."
-    end
-    redirect_to root_path
-  end
 
   def auth
     request.env['omniauth.auth']

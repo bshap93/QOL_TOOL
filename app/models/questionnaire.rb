@@ -36,4 +36,15 @@ class Questionnaire < ActiveRecord::Base
     return second
   end
 
+  def question_attributes=(question_attributes)
+    question = Question.new
+    question.body = question_attributes[:body]
+    question.category = Category.find(question_attributes[:category_id])
+    self.save
+    question.questionnaire = self
+    question.save
+    self.questions << question
+    self.save
+  end
+
 end

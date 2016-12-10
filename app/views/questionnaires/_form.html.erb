@@ -17,5 +17,20 @@
 
   <%= f.label "Use Default Questions" %>
   <%= f.check_box :default %> <hr>
+
+  <h4>Add the First Question</h4>
+  <%= f.fields_for :questions do |question| %>
+    <div class="field">
+      <%= question.label :body %><br>
+      <%= question.text_field :body %>
+    </div>
+    <div class="field">
+      <%= question.label :category %><br>
+      <%= question.collection_select :category_id, Category.all, :id, :name %><hr>
+    </div>
+
+  <% end %>
+
+  <hr>
   <%= f.submit %>
 <% end %>

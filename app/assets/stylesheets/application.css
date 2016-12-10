@@ -28,3 +28,11 @@
 .add_question_to_questionnaire {
   color:green;
 }
+
+.signout {
+  position: absolute;
+  padding-top: 1em;
+  right: 2em;
+  color: white;
+  font-weight: bolder;
+}

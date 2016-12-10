@@ -17,7 +17,6 @@ class QuestionnairesController < ApplicationController
 
   def update
     if params[:questionnaire][:default] == "1" && params[:id] != "1"
-      binding.pry
       @questionnaire = Questionnaire.default_clone.combine(Questionnaire.find(params[:id]))
     else
       @questionnaire = Questionnaire.find(params[:id])
@@ -41,6 +40,7 @@ class QuestionnairesController < ApplicationController
     @questionnaire.name = params[:questionnaire][:name]
     @questionnaire.default = params[:questionnaire][:default]
     @questionnaire.user = current_user
+    @questionnaire.question_attributes = params[:questionnaire][:questions]
     if @questionnaire.save
       redirect_to questionnaire_path(@questionnaire)
     else
@@ -54,7 +54,7 @@ class QuestionnairesController < ApplicationController
 
   private
   def questionnaire_params
-    params.require(:questionnaire).permit(:name, :default)
+    params.require(:questionnaire).permit(:name, :default, questions_attributes: [:body, :category_id,])
   end
 
 end
