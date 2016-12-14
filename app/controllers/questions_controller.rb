@@ -18,8 +18,8 @@ class QuestionsController < ApplicationController
     if @question.save
       redirect_to questionnaire_path(params[:questionnaire_id])
     else
-      flash[:error] = "Invalid Question"
-      redirect_to root_path
+      session[:errors] = @question.errors.full_messages
+      redirect_to new_questionnaire_question_path(@question.questionnaire)
     end
   end
 
@@ -36,7 +36,8 @@ class QuestionsController < ApplicationController
     if @question.save
       redirect_to questionnaire_path(params[:questionnaire_id])
     else
-      flash[:error] = "Invalid Question"
+      session[:errors] = @question.errors.full_messages
+      redirect_to edit_questionnaire_question_path(@question.questionnaire, @question)
     end
   end
 

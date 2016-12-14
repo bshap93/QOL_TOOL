@@ -27,7 +27,7 @@ class QuestionnairesController < ApplicationController
     if @questionnaire.save
       redirect_to questionnaire_path(@questionnaire)
     else
-      # session[:errors] = @questionnaire.errors.full_messages
+      session[:errors] = @questionnaire.errors.full_messages
       redirect_to edit_questionnaire_path(@questionnaire)
     end
   end
