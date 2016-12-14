@@ -36,3 +36,6 @@
   color: white;
   font-weight: bolder;
 }
+.alert-error, .alert, .error {
+  color: red;
+}

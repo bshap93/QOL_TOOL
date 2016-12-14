@@ -163,6 +163,7 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rake (11.3.0)
+    rb-readline (0.5.3)
     rdoc (4.3.0)
     rest-client (2.0.0)
       http-cookie (>= 1.0.2, < 2.0)
@@ -225,6 +226,7 @@ DEPENDENCIES
   pry (~> 0.10.3)
   rails (= 4.2.6)
   rails_12factor
+  rb-readline
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   spring
@@ -236,4 +238,4 @@ RUBY VERSION
    ruby 2.3.1p112
 
 BUNDLED WITH
-   1.13.2
+   1.13.6

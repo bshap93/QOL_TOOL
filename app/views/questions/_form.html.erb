@@ -1,15 +1,14 @@
+<% if session[:errors] %>
+  <p class="alert alert-error">Ooops! Please correct the following: 
+    <ul>
+    <% session[:errors].each do |msg| %>
+        <li class="error"><%= msg %></li>
+    <% end %>
+    </ul>
+  </p>
+  <% session[:errors] = nil %>
+<% end %>
 <%= form_for([@questionnaire, @question]) do |f| %>
-  <% if @question.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@question.errors.count, "error") %> prohibited this question from being saved:</h2>
-
-      <ul>
-      <% @question.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
 
   <div class="field">
     <%= f.label :body %><br>

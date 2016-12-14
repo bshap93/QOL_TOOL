@@ -27,6 +27,7 @@ class QuestionnairesController < ApplicationController
     if @questionnaire.save
       redirect_to questionnaire_path(@questionnaire)
     else
+      # session[:errors] = @questionnaire.errors.full_messages
       redirect_to edit_questionnaire_path(@questionnaire)
     end
   end
@@ -40,10 +41,13 @@ class QuestionnairesController < ApplicationController
     @questionnaire.name = params[:questionnaire][:name]
     @questionnaire.default = params[:questionnaire][:default]
     @questionnaire.user = current_user
-    @questionnaire.question_attributes = params[:questionnaire][:questions]
+    if !params[:questionnaire][:questions][:body].empty?
+      @questionnaire.question_attributes = params[:questionnaire][:questions]
+    end
     if @questionnaire.save
       redirect_to questionnaire_path(@questionnaire)
     else
+      session[:errors] = @questionnaire.errors.full_messages
       redirect_to new_questionnaire_path
     end
   end

@@ -1,16 +1,17 @@
-<% if @user.errors.any? %>
-  <div id="error_explanation">
-    <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
+<% if session[:errors] %>
+  <p class="alert alert-error">Ooops! Please correct the following:
     <ul>
-    <% @user.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
+    <% session[:errors].each do |msg| %>
+        <li class="error"><%= msg %></li>
     <% end %>
     </ul>
-  </div>
+  </p>
+  <% session[:errors] = nil %>
 <% end %>
-
 <%= form_for @questionnaire do |f| %>
+  <%= render 'shared/error_messages', :object => @questionnaire %>
+
+
   <%= f.label :name %>
   <%= f.text_field :name %>
   <hr>

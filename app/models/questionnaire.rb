@@ -5,6 +5,8 @@ class Questionnaire < ActiveRecord::Base
 
   validates :name, presence: true
   validates :user, presence: true
+  validates :name, uniqueness: true
+
 
   def self.my_questionnaires(current_user_id)
     Questionnaire.where("user_id = #{current_user_id}")
@@ -40,7 +42,6 @@ class Questionnaire < ActiveRecord::Base
     question = Question.new
     question.body = question_attributes[:body]
     question.category = Category.find(question_attributes[:category_id])
-    self.save
     question.questionnaire = self
     question.save
     self.questions << question
