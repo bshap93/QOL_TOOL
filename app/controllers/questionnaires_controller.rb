@@ -33,6 +33,7 @@ class QuestionnairesController < ApplicationController
   end
 
   def create
+    raise params.inspect
     if params[:questionnaire][:default] == "1"
       @questionnaire = Questionnaire.default_clone
     else
