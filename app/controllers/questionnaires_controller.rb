@@ -6,6 +6,7 @@ class QuestionnairesController < ApplicationController
   end
 
   def new
+    @question_num = 1
     @questionnaire = Questionnaire.new
     @user = current_user
   end
@@ -61,5 +62,7 @@ class QuestionnairesController < ApplicationController
   def questionnaire_params
     params.require(:questionnaire).permit(:name, :default, questions_attributes: [:body, :category_id,])
   end
+
+
 
 end

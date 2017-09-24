@@ -1,10 +1,25 @@
 <div class="question_form">
-  <div class="body_field">
+  <div class="body_field_<%= question_num %>">
     <%= question.label :body %><br>
-    <%= question.text_field :body %>
+    <input type="text" name="questionnaire[questions][body][<%= question_num %>]" id="questionnaire_questions_body_<%= question_num %>">
   </div>
   <div class="category_field">
     <%= question.label :category %><br>
-    <%= question.collection_select :category_id, Category.all, :id, :name %><hr>
+    <select name="questionnaire[questions][category_id][<%= question_num %>]" id="questionnaire_questions_category_id_<%= question_num %>">
+      <option value="1">Physical</option>
+      <option value="2">Sleep</option>
+      <option value="3">Mood</option>
+      <option value="4">Cognition</option>
+      <option value="5">Leisure</option>
+      <option value="6">Social</option>
+      <option value="7">Spirituality</option>
+      <option value="8">Finances</option>
+      <option value="9">Household</option>
+      <option value="10">Self-esteem</option>
+      <option value="11">Independence</option>
+      <option value="12">Identity</option>
+      <option value="13">Work</option>
+      <option value="14">Education</option>
+    </select>
   </div>
 </div>
