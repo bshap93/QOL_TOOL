@@ -6,7 +6,7 @@ class QuestionnairesController < ApplicationController
   end
 
   def new
-    @question_num = 1
+    @question_num = 0
     @questionnaire = Questionnaire.new
     @user = current_user
   end
@@ -34,7 +34,6 @@ class QuestionnairesController < ApplicationController
   end
 
   def create
-    raise params.inspect
     if params[:questionnaire][:default] == "1"
       @questionnaire = Questionnaire.default_clone
     else
@@ -47,7 +46,8 @@ class QuestionnairesController < ApplicationController
       @questionnaire.question_attributes = params[:questionnaire][:questions]
     end
     if @questionnaire.save
-      redirect_to questionnaire_path(@questionnaire)
+      render json: @questionnaire, status: 201
+      #redirect_to questionnaire_path(@questionnaire)
     else
       session[:errors] = @questionnaire.errors.full_messages
       redirect_to new_questionnaire_path

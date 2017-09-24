@@ -1,3 +1,17 @@
+<script type="text/javascript">
+$(function() {
+  $('form').submit(function(event) {
+    event.preventDefault();
+    var values = $(this).serialize();
+    var posting = $.post('/questionnaires', values);
+
+    posting.done(function(data) {
+      console.log(data);
+      debugger
+    })
+  })
+})
+</script>
 <% if session[:errors] %>
   <p class="alert alert-error">Ooops! Please correct the following:
     <ul>
@@ -23,7 +37,7 @@
   <%= f.fields_for :questions do |question| %>
     <% @question = question %>
     <div id="question_forms">
-      <%= render 'questionnaires/form_fields', question: question, question_num: 1 %>
+      <%= render 'questionnaires/form_fields', question: question, question_num: 0 %>
     </div>
   <% end %>
   <%= link_to "New Question", "#", id: "new_question" %>
@@ -33,9 +47,6 @@
 <% end %>
 
 <script type="text/javascript">
-  $(function() {
-    var question_num = 2;
-  })
   $("#new_question").click(function(event) {
     event.preventDefault();
     var question_form = "<%=j(render 'questionnaires/form_fields', question: @question, question_num: (@question_num = question_num(@question_num)) )%>"

@@ -39,13 +39,17 @@ class Questionnaire < ActiveRecord::Base
   end
 
   def question_attributes=(question_attributes)
-    question = Question.new
-    question.body = question_attributes[:body]
-    question.category = Category.find(question_attributes[:category_id])
-    question.questionnaire = self
-    question.save
-    self.questions << question
-    self.save
+    question_attributes[:body].length.times do |num|
+      if question_attributes[:body]["#{num}"] != ""
+        question = Question.new
+        question.body = question_attributes[:body]["#{num}"]
+        question.category = Category.find(question_attributes[:category_id]["#{num}"])
+        question.questionnaire = self
+        question.save
+        self.questions << question
+        self.save
+      end
+    end
   end
 
 end
