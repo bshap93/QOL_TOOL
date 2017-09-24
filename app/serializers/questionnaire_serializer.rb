@@ -1,3 +1,5 @@
 class QuestionnaireSerializer < ActiveModel::Serializer
-  attributes :id
+  attributes :id, :name, :default
+  belongs_to :user, serializer: QuestionnaireUserSerializer
+  has_many :questions
 end

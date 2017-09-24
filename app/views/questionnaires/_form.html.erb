@@ -1,17 +1,3 @@
-<script type="text/javascript">
-$(function() {
-  $('form').submit(function(event) {
-    event.preventDefault();
-    var values = $(this).serialize();
-    var posting = $.post('/questionnaires', values);
-
-    posting.done(function(data) {
-      console.log(data);
-      debugger
-    })
-  })
-})
-</script>
 <% if session[:errors] %>
   <p class="alert alert-error">Ooops! Please correct the following:
     <ul>
@@ -45,6 +31,25 @@ $(function() {
   <hr>
   <%= f.submit %>
 <% end %>
+
+<div id="questionnaire-data">
+</div>
+
+<script type="text/javascript">
+$(function() {
+  $('form').submit(function(event) {
+    event.preventDefault();
+    var values = $(this).serialize();
+    var posting = $.post('/questionnaires', values);
+
+    posting.done(function(data) {
+      console.log(data);
+      $("#questionnaire-data").append("<%= render 'questionnaires/questionnaire_data' %>")
+
+    })
+  })
+})
+</script>
 
 <script type="text/javascript">
   $("#new_question").click(function(event) {

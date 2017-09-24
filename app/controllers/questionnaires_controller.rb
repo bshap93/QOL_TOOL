@@ -46,8 +46,7 @@ class QuestionnairesController < ApplicationController
       @questionnaire.question_attributes = params[:questionnaire][:questions]
     end
     if @questionnaire.save
-      render json: @questionnaire, status: 201
-      #redirect_to questionnaire_path(@questionnaire)
+      redirect_to questionnaire_path(@questionnaire)
     else
       session[:errors] = @questionnaire.errors.full_messages
       redirect_to new_questionnaire_path
@@ -56,6 +55,7 @@ class QuestionnairesController < ApplicationController
 
   def show
     @questionnaire = Questionnaire.find(params[:id])
+    render json: @questionnaire, status: 201
   end
 
   private
