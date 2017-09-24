@@ -9,7 +9,6 @@
   <% session[:errors] = nil %>
 <% end %>
 <%= form_for @questionnaire do |f| %>
-  <% @f = f %>
   <%= render 'shared/error_messages', :object => @questionnaire %>
 
 
@@ -20,9 +19,14 @@
   <%= f.label "Use Default Questions" %>
   <%= f.check_box :default %> <hr>
 
-  <%= f.button "Create a New Question", id: "new_question" %>
-  <div id="question_forms"></div>
-
+  <h4>Add the First Question</h4>
+  <%= f.fields_for :questions do |question| %>
+    <% @question = question %>
+    <div id="question_forms">
+      <%= render 'questionnaires/form_fields', question: question, question_num: 1 %>
+    </div>
+  <% end %>
+  <%= link_to "New Question", "#", id: "new_question" %>
 
   <hr>
   <%= f.submit %>
@@ -31,7 +35,13 @@
 <script type="text/javascript">
   $("#new_question").click(function(event) {
     event.preventDefault();
-    var question_form = "<%= j(render 'questionnaires/question_form', f: @f) %>"
+
+    var question_form_string = "j(render 'questionnaires/form_fields', question: @question, question_num: "+ <%= question_num %> + " )"
+    var question_form = <%= question_num %>
     $("#question_forms").append(question_form)
   })
+</script>
+
+<script id="issue-template" type="text/x-handlebars-template">
+
 </script>

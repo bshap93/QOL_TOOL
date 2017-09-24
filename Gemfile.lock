@@ -65,6 +65,10 @@ GEM
       multipart-post (>= 1.2, < 3)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
+    handlebars_assets (0.23.2)
+      execjs (~> 2.0)
+      sprockets (>= 2.0.0)
+      tilt (>= 1.2)
     hashie (3.4.6)
     heroku (3.41.5)
       heroku-api (>= 0.3.19)
@@ -217,6 +221,7 @@ DEPENDENCIES
   byebug
   coffee-rails (~> 4.1.0)
   deep_cloneable (~> 2.2.2)
+  handlebars_assets
   heroku
   jbuilder (~> 2.0)
   jquery-rails

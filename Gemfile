@@ -35,6 +35,8 @@ gem 'heroku'
 # gem 'unicorn'
 gem 'rb-readline'
 
+gem 'handlebars_assets'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
