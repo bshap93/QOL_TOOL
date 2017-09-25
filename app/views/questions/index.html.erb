@@ -17,7 +17,7 @@
           <!-- true -->
           <tr>
             <td>In the past 7 days, I <%= question.body %></td>
-            <td>Category: <%= question.category %></td>
+            <td>Category: <%= question.category.name %></td>
             <td class="btn btn-outline-info btn-lg active"><%= link_to 'Show', questionnaire_question_path(question.questionnaire.id, question.id) %></td>
             <% if question.questionnaire.id != 1 %>
               <td class="btn btn-outline-info btn-lg active"><%= link_to 'Edit', edit_questionnaire_question_path(question.questionnaire.id, question.id) %></td>
