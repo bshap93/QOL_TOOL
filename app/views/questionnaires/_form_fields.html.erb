@@ -1,13 +1,13 @@
 <hr>
-<h4>Question <%= 1 + question_num %></h4>
+<h4>Next Question</h4>
 <div class="question_form">
-  <div class="body_field_<%= question_num %>">
-    <%= question.label :body %><br>
-    <input type="text" name="questionnaire[questions][body][<%= question_num %>]" id="questionnaire_questions_body_<%= question_num %>">
+  <div class="body_field">
+    <label for="">Body</label><br>
+    <input type="text" name="questionnaire[questions][body]" id="questionnaire_questions_body">
   </div>
   <div class="category_field">
-    <%= question.label :category %><br>
-    <select name="questionnaire[questions][category_id][<%= question_num %>]" id="questionnaire_questions_category_id_<%= question_num %>">
+    <label for="">Category</label><br>
+    <select name="questionnaire[questions][category_id]" id="questionnaire_questions_category_id">
       <option value="1">Physical</option>
       <option value="2">Sleep</option>
       <option value="3">Mood</option>

@@ -23,7 +23,6 @@
   <%= f.fields_for :questions do |question| %>
     <% @question = question %>
     <div id="question_forms">
-      <%= render 'questionnaires/form_fields', question: question, question_num: 0 %>
     </div>
   <% end %>
   <%= link_to "New Question", "#", id: "new_question" %>
@@ -34,6 +33,10 @@
 <br><hr>
 
 <div id="questionnaire-data">
+</div>
+
+<div id="links">
+  <p id="links-paragraph" ></p>
 </div>
 
 <script type="text/javascript">
@@ -57,16 +60,18 @@ $(function() {
         $(`#question-body-${index}`).text(question["body"])
         $(`#question-category-${index}`).text(question["category_id"])
       })
+      $("#links-paragraph").append('<a href="/">Back to Main Menu</a>')
 
     })
   })
 })
 </script>
 
+
 <script type="text/javascript">
   $("#new_question").click(function(event) {
     event.preventDefault();
-    var question_form = "<%=j(render 'questionnaires/form_fields', question: @question, question_num: (@question_num = question_num(@question_num)) )%>"
+    var question_form = "<%=j(render 'questionnaires/form_fields'  )%>"
     $("#question_forms").append(question_form)
   })
 </script>
