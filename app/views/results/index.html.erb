@@ -1,10 +1,10 @@
-<h2>Your Results</h2>
+<h1>Your Results</h1>
 <tbody>
   <% @results.reverse_each do |result| %>
     <tr>
-        <td><%= result.questionnaire.name %></td><br>
+        <td><h3><%= result.questionnaire.name %></h3></td><br>
         <td>Total Score: <%= result.rating %></td><br>
-        <td><%= link_to result.created_at, result_path(result.questionnaire, result) %></td>
+        <td><%= link_to "See Category Ratings", result_path(result.questionnaire, result), class: "category_rating" %></td>
         <div id="result-hook-<%= result.id %>"></div>
     </tr>
     <hr>
@@ -13,13 +13,24 @@
 </tbody>
 
 <script type="text/javascript">
-  $('a').on('click', function(event) {
+  function CategoryRating(categoryName, rating) {
+    this.categoryName = categoryName;
+    this.rating = rating;
+    this.toPage = function() {
+      return `<h4>${categoryName}</h4><br /><p>Rating: <strong>${rating}</strong></p><hr />`
+    }
+  }
+
+  $('a.category_rating').on('click', function(event) {
     event.preventDefault()
     $.get(this.href, function(data) {
-      $.each(data["category_ratings"], function(category_rating) {
-        debugger
-        //var category_rating = new CategoryRating()
-      })
+      for (var i = 0, l = data["category_ratings"].length; i < l; i++) {
+        var category_name = data["category_ratings"][i]["category"]["name"]
+        var rating = data["category_ratings"][i]["rating"]
+        var category_rating = new CategoryRating(category_name, rating);
+        // debugger
+        $(`#result-hook-${data["id"]}`).append(category_rating.toPage())
+      }
     })
 
   })
