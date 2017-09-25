@@ -23,6 +23,7 @@ Rails.application.routes.draw do
 
   get '/questionnaires/:questionnaire_id/results/:id', to: 'results#show', as: "result"
 
+  get '/questionnaires/:questionnaire_id/category/:id/category_data', to: 'category#category_data', as: "category_data"
 
   resources :users
 

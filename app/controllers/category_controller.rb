@@ -40,7 +40,11 @@ class CategoryController < ApplicationController
     @questionnaire = Questionnaire.find(params[:questionnaire_id])
     @@category_count += 1
     unless @@category_count > 14
-      redirect_to display_category_path(@questionnaire, Category.find(@@category_count))
+      respond_to do |format|
+        @questions_in_category = @questionnaire.questions.where(category_id: @@category_count)
+        format.json { render json: {category: Category.find(@@category_count), questions: @questions_in_category} }
+        format.html { redirect_to display_category_path(@questionnaire, Category.find(@@category_count)) }
+      end
     else
       redirect_to questionnaire_result_path(@questionnaire, Result.find(session[:result_id]))
     end

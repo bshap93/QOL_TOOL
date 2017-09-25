@@ -5,4 +5,5 @@ class Category < ActiveRecord::Base
   def return_questions_by_category
     Question.where("category_id = #{self.id}")
   end
+
 end
