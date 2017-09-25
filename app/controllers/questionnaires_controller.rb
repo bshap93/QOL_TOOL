@@ -29,6 +29,9 @@ class QuestionnairesController < ApplicationController
     @questionnaire.name = params[:questionnaire][:name]
     @questionnaire.default = params[:questionnaire][:default]
     @questionnaire.user = current_user
+    if !params[:questionnaire][:questions].nil?
+      @questionnaire.question_attributes = params[:questionnaire][:questions]
+    end
     if @questionnaire.save
       redirect_to questionnaire_path(@questionnaire)
     else
