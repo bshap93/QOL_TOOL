@@ -5,8 +5,22 @@
         <td><%= result.questionnaire.name %></td><br>
         <td>Total Score: <%= result.rating %></td><br>
         <td><%= link_to result.created_at, result_path(result.questionnaire, result) %></td>
+        <div id="result-hook-<%= result.id %>"></div>
     </tr>
     <hr>
 
   <% end %>
 </tbody>
+
+<script type="text/javascript">
+  $('a').on('click', function(event) {
+    event.preventDefault()
+    $.get(this.href, function(data) {
+      $.each(data["category_ratings"], function(category_rating) {
+        debugger
+        //var category_rating = new CategoryRating()
+      })
+    })
+
+  })
+</script>
