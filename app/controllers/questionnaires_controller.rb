@@ -55,7 +55,11 @@ class QuestionnairesController < ApplicationController
 
   def show
     @questionnaire = Questionnaire.find(params[:id])
-    render json: @questionnaire, status: 201
+    respond_to do |f|
+      f.json { render json: @questionnaire, status: 201 }
+      f.html { render :show }
+    end
+
   end
 
   private

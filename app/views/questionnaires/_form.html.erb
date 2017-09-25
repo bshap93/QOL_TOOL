@@ -31,6 +31,7 @@
   <hr>
   <%= f.submit %>
 <% end %>
+<br><hr>
 
 <div id="questionnaire-data">
 </div>
@@ -44,7 +45,18 @@ $(function() {
 
     posting.done(function(data) {
       console.log(data);
-      $("#questionnaire-data").append("<%= render 'questionnaires/questionnaire_data' %>")
+      $("#questionnaire-data").append("<%= j(render 'questionnaires/questionnaire_data') %>")
+      $('#questionnaire-name').text(data["name"] + " Questionnaire")
+      $('#questionnaire-user').text("Owned by: " + data["user"]["name"])
+      $.each(data["questions"], function(index, question) {
+        $('#questions').append("<h4>Question "+(index + 1)+"</h4>")
+        $('#questions').append("<%= j(render 'questionnaires/question_data') %>")
+        $('#question-body').attr('id', `question-body-${index}`);
+        $('#question-category').attr('id', `question-body-${index}`);
+        $('#question-questionnaire').attr('id', `question-body-${index}`);
+        $(`#question-body-${index}`).text(question["body"])
+        $(`#question-category-${index}`).text(question["category_id"])
+      })
 
     })
   })
