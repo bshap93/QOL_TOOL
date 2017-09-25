@@ -11,8 +11,25 @@
     <%= f.submit "Take Questionnaire" %>
   <% end %>
   <hr>
-  <%= link_to "All my Questionnaires", questionnaires_path %> <hr>
+  <%= link_to "All my Questionnaires", questionnaires_path, id: "questionnaire-index" %> <hr>
   <%= link_to "Create a New Questionnaire", new_questionnaire_path %> <hr>
   <%= link_to "See my Past Results", questionnaire_results_path(Questionnaire.last) %> <hr>
+  <div id="questionnaires-list">
 
+  </div>
 <% end %>
+
+<script type="text/javascript">
+  $("#questionnaire-index").on('click', function(event) {
+    event.preventDefault();
+    $.ajax({
+      url: '/questionnaires',
+      type: 'GET'
+    }).done(function(questionnaires) {
+      console.log(data);
+      $.each(questionnaires, function(questionnaire) {
+        
+      })
+    })
+  })
+</script>

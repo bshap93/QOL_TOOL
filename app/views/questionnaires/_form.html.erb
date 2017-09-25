@@ -19,7 +19,7 @@
   <%= f.label "Use Default Questions" %>
   <%= f.check_box :default %> <hr>
 
-  <h4>Add the First Question</h4>
+  <h4 id="h4-add-first">Add the First Question</h4>
   <%= f.fields_for :questions do |question| %>
     <% @question = question %>
     <div id="question_forms">
@@ -28,7 +28,7 @@
   <%= link_to "New Question", "#", id: "new_question" %>
 
   <hr>
-  <%= f.submit %>
+  <input id="submit-questionnaire" type="submit" name="commit" value="Create Questionnaire">
 <% end %>
 <br><hr>
 
@@ -43,11 +43,11 @@
 $(function() {
   $('form').submit(function(event) {
     event.preventDefault();
+    $("#new_questionnaire").hide()
     var values = $(this).serialize();
     var posting = $.post('/questionnaires', values);
 
     posting.done(function(data) {
-      console.log(data);
       $("#questionnaire-data").append("<%= j(render 'questionnaires/questionnaire_data') %>")
       $('#questionnaire-name').text(data["name"] + " Questionnaire")
       $('#questionnaire-user').text("Owned by: " + data["user"]["name"])

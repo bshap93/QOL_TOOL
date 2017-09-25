@@ -3,6 +3,10 @@ class QuestionnairesController < ApplicationController
   def index
     current_user_id = current_user.id
     @questionnaires = Questionnaire.my_questionnaires(current_user_id)
+    respond_to do |format|
+      format.json { render json: @questionnaires }
+      format.html { render :index }
+    end
   end
 
   def new
@@ -42,7 +46,7 @@ class QuestionnairesController < ApplicationController
     @questionnaire.name = params[:questionnaire][:name]
     @questionnaire.default = params[:questionnaire][:default]
     @questionnaire.user = current_user
-    if !params[:questionnaire][:questions][:body].empty?
+    if !params[:questionnaire][:questions].nil?
       @questionnaire.question_attributes = params[:questionnaire][:questions]
     end
     if @questionnaire.save
