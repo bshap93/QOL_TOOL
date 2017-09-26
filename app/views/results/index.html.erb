@@ -22,7 +22,7 @@
   }
   for (var e = 0, m = $('a.category_rating').length; e < m; e++) {
     $('a.category_rating').eq(e).on('click', function(event) {
-      // event.preventDefault()
+      event.preventDefault()
       $.get(this.href, function(data) {
         for (var i = 0, l = data["category_ratings"].length; i < l; i++) {
           var category_name = data["category_ratings"][i]["category"]["name"]

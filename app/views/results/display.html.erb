@@ -1,9 +1,29 @@
 <h2>Results of the <%= @questionnaire.name %> Questionnaire</h2>
 From 4 to 20, your <%= @questionnaire.name %> results are:
 <hr>
-<% @categories.each do |category| %>
-  <%= category.name %>: <%= CategoryRating.find(category.id).rating %>
-  <hr>
-<% end %>
+<div id="result-hook"></div>
 Total: <%= @result.rating %> <hr>
 <%= link_to "Results index", questionnaire_results_path(@questionnaire) %>
+<script type="text/javascript">
+  $(function() {
+    function CategoryRating(categoryName, rating) {
+      this.categoryName = categoryName;
+      this.rating = rating;
+      this.toPage = function() {
+        return `<h4>${categoryName}</h4><br /><p>Rating: <strong>${rating}</strong></p><hr />`
+      }
+    }
+
+    $.get('/questionnaires/<%= @questionnaire.id %>/results/<%= Result.find(session[:result_id]).id %>', function(data) {
+      for (var i = 0, l = data["category_ratings"].length; i < l; i++) {
+        var category_name = data["category_ratings"][i]["category"]["name"]
+        var rating = data["category_ratings"][i]["rating"]
+        var category_rating = new CategoryRating(category_name, rating);
+        // debugger
+        $(`#result-hook`).append(category_rating.toPage())
+      }
+    })
+  })
+
+
+</script>

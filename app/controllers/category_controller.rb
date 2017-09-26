@@ -25,7 +25,7 @@ class CategoryController < ApplicationController
   end
 
   def record
-    @category_rating = CategoryRating.create
+    @category_rating = CategoryRating.create(category: Category.find(params[:id]))
     @result = Result.find(session[:result_id])
     number_of_questions = params[:count].to_i - 1
     thecount = 1
