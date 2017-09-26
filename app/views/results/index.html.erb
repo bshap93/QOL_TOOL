@@ -20,18 +20,19 @@
       return `<h4>${categoryName}</h4><br /><p>Rating: <strong>${rating}</strong></p><hr />`
     }
   }
+  for (var e = 0, m = $('a.category_rating').length; e < m; e++) {
+    $('a.category_rating').eq(e).on('click', function(event) {
+      // event.preventDefault()
+      $.get(this.href, function(data) {
+        for (var i = 0, l = data["category_ratings"].length; i < l; i++) {
+          var category_name = data["category_ratings"][i]["category"]["name"]
+          var rating = data["category_ratings"][i]["rating"]
+          var category_rating = new CategoryRating(category_name, rating);
+          // debugger
+          $(`#result-hook-${data["id"]}`).append(category_rating.toPage())
+        }
+      })
 
-  $('a.category_rating').on('click', function(event) {
-    event.preventDefault()
-    $.get(this.href, function(data) {
-      for (var i = 0, l = data["category_ratings"].length; i < l; i++) {
-        var category_name = data["category_ratings"][i]["category"]["name"]
-        var rating = data["category_ratings"][i]["rating"]
-        var category_rating = new CategoryRating(category_name, rating);
-        // debugger
-        $(`#result-hook-${data["id"]}`).append(category_rating.toPage())
-      }
     })
-
-  })
+  }
 </script>
