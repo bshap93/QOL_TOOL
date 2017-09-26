@@ -51,7 +51,7 @@ class QuestionsController < ApplicationController
     @question = Question.find(params[:id])
     @questionnaire = @question.questionnaire
     @question.delete
-    redirect_to questionnaire_questions_path(@questionnaire.id)
+    redirect_to questionnaire_path(@questionnaire.id)
   end
 
 

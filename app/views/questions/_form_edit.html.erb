@@ -1,0 +1,16 @@
+
+<%= form_for([@questionnaire, @question]) do |f| %>
+
+  <div class="field">
+    <%= f.label :body %><br>
+    <%= f.text_field :body %>
+  </div>
+  <div class="field">
+    <%= f.label :category %><br>
+    <%= f.collection_select :category_id, Category.all, :id, :name %><hr>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
