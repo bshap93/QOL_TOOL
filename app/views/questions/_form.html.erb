@@ -1,14 +1,5 @@
-<% if session[:errors] %>
-  <p class="alert alert-error">Ooops! Please correct the following: 
-    <ul>
-    <% session[:errors].each do |msg| %>
-        <li class="error"><%= msg %></li>
-    <% end %>
-    </ul>
-  </p>
-  <% session[:errors] = nil %>
-<% end %>
-<%= form_for([@questionnaire, @question]) do |f| %>
+
+<%= form_for([@questionnaire, Question.create]) do |f| %>
 
   <div class="field">
     <%= f.label :body %><br>

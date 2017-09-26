@@ -1,4 +1,4 @@
-<h4><%= @questionnaire.name %> Questionnaire</h4> <hr>
+<h3><%= @questionnaire.name %> Questionnaire</h3> <hr>
 <h4>Owned by: <%= @questionnaire.user.name %></h4>
 <% if @questionnaire.questions.count == 0 %>
   <h4>No questions yet!</h4>
@@ -8,6 +8,21 @@
     <p><strong>This question: </strong>belongs to the <strong><%= question.category.name %></strong> category</p>
     <p>and the <strong><%= @questionnaire.name %></strong> questionnaire</p>
     <%= link_to "Edit", edit_questionnaire_question_path(@questionnaire, question) %>  |  <%= link_to "Destroy", destroy_question_path(@questionnaire, question) %>
+    <hr>
   <% end %>
 <% end %><hr>
-<%= link_to "Make a new question", new_questionnaire_question_path(@questionnaire) %>
+<%= link_to "Make a new question", new_questionnaire_question_path(@questionnaire), class: "new-question" %>
+<div id="question_forms"></div>
+<script type="text/javascript">
+  var question_num = 0;
+  $(".new-question").on('click', function(event) {
+    event.preventDefault();
+    var question_form = "<%=j(render 'questions/form'  )%>"
+    $("#question_forms").append(question_form)
+    $("#questionnaire_questions_body").attr('name', `questionnaire[questions][body][${question_num}]`)
+    $("#questionnaire_questions_body").attr('id', `questionnaire_questions_body_${question_num}`)
+    $("#questionnaire_questions_category_id").attr('name', `questionnaire[questions][category_id][${question_num}]`)
+    $("#questionnaire_questions_category_id").attr('id', `questionnaire_questions_category_id_${question_num}`)
+    question_num++;
+  })
+</script>

@@ -39,3 +39,7 @@
 .alert-error, .alert, .error {
   color: red;
 }
+
+.field_with_errors {
+  background-color: white;
+}

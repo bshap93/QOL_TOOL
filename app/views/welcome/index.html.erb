@@ -26,13 +26,13 @@
       url: '/questionnaires',
       type: 'GET'
     }).done(function(questionnaires) {
-      $("#questionnaires-list").append("<h2>Questionnaires List</h2>")
+      $("#questionnaires-list").append(`<h2>Questionnaires List</h2>`)
       for (var i = (questionnaires.length - 1), l =0; i >= l; i--) {
         //debugger
         $("#questionnaires-list").append(`
           <p>${questionnaires[i]["name"]}</p>
           <p>User: ${questionnaires[i]["user"]["name"]}</p>
-          <a href="/questionnaires/${i + 1}/edit">Edit</a> | <a href="/questionnaires/${i + 1}/questions">Go to Questions</a>
+          <a href="/questionnaires/${i + 1}/edit">Edit</a> | <a href="/questionnaires/${i + 1}">Go to Questions</a>
           <hr />
         `)
 
