@@ -1,3 +1,17 @@
 <h3>Edit Questionnaire <%= @questionnaire.name %></h3>
-
-<%= render 'questionnaires/form' %>
+<%= render 'questionnaires/questionnaire_show' %>
+<%= link_to "Make a new question", new_questionnaire_question_path(@questionnaire), class: "new-question" %>
+<div id="question_forms"></div>
+<script type="text/javascript">
+  var question_num = 0;
+  $(".new-question").on('click', function(event) {
+    event.preventDefault();
+    var question_form = "<%=j(render 'questions/form'  )%>"
+    $("#question_forms").append(question_form)
+    $("#questionnaire_questions_body").attr('name', `questionnaire[questions][body][${question_num}]`)
+    $("#questionnaire_questions_body").attr('id', `questionnaire_questions_body_${question_num}`)
+    $("#questionnaire_questions_category_id").attr('name', `questionnaire[questions][category_id][${question_num}]`)
+    $("#questionnaire_questions_category_id").attr('id', `questionnaire_questions_category_id_${question_num}`)
+    question_num++;
+  })
+</script>

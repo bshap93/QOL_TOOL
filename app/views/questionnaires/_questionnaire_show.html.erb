@@ -1,0 +1,13 @@
+<h3><%= @questionnaire.name %> Questionnaire</h3> <hr>
+<h4>Owned by: <%= @questionnaire.user.name %></h4>
+<% if @questionnaire.questions.count == 0 %>
+  <h4>No questions yet!</h4>
+<% else %>
+  <% @questionnaire.questions.each do |question| %>
+    <p>Question: <%= question.body %></p>
+    <p><strong>This question: </strong>belongs to the <strong><%= question.category.name %></strong> category</p>
+    <p>and the <strong><%= @questionnaire.name %></strong> questionnaire</p>
+    <%= link_to "Edit", edit_questionnaire_question_path(@questionnaire, question) %>  |  <%= link_to "Destroy", destroy_question_path(@questionnaire, question) %>
+    <hr>
+  <% end %>
+<% end %>
