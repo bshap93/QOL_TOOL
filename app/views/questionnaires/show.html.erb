@@ -1,7 +1,22 @@
 <%= render 'questionnaires/questionnaire_show' %>
+<div id="questionnaire-show"></div>
 <hr>
 <%= link_to "Make a new question", new_questionnaire_question_path(@questionnaire), class: "new-question" %>
 <div id="question_forms"></div>
+<script type="text/javascript">
+  $(function() {
+    var questionnaire_id = <%= @questionnaire.id %>
+    $.ajax({
+      url: `/questionnaires/${questionnaire_id}`,
+      type: 'GET'
+    }).done(function(questionnaire) {
+      $("#questionnaire-show").append(`<h3>${questionnaire["name"]} Questionnaire</h3> <hr>`)
+      $.each(questionnaire["questions"], function(index, question) {
+        debugger
+      })
+    })
+  })
+</script>
 <script type="text/javascript">
   var question_num = 0;
   $(".new-question").on('click', function(event) {
