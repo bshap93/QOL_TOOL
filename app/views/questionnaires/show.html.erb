@@ -1,21 +1,47 @@
-<%= render 'questionnaires/questionnaire_show' %>
+<a id="questionnaire-back" href="#">Last Questionnaire</a> | <a id="questionnaire-next" href="#">Next Questionnaire</a>
 <div id="questionnaire-show"></div>
 <hr>
 <%= link_to "Make a new question", new_questionnaire_question_path(@questionnaire), class: "new-question" %>
 <div id="question_forms"></div>
 <script type="text/javascript">
-  $(function() {
-    var questionnaire_id = <%= @questionnaire.id %>
+  function Question(body, category, questionnaire, questionnaire_id, id) {
+    this.body = body;
+    this.category = category;
+    this.questionnaire = questionnaire;
+    this.questionnaire_id = questionnaire_id;
+    this.id = id;
+
+    this.display = function() {
+      return (`
+        <p>Question: ${this.body}</p>
+        <p><strong>This question: </strong>belongs to the <strong>${this.category}</strong> category</p>
+        <p>and the <strong>${this.questionnaire}</strong> questionnaire</p>
+        <a href="/questionnaires/${this.questionnaire_id}/questions/${this.id}/edit">Edit</a> | <a data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="/questionnaires/${this.questionnaire_id}/questions/${this.id}">Destroy</a>
+      `)
+    }
+  }
+
+
+  function load_questionnaire(q_id) {
     $.ajax({
-      url: `/questionnaires/${questionnaire_id}`,
+      url: `/questionnaires/${q_id}`,
       type: 'GET'
     }).done(function(questionnaire) {
-      $("#questionnaire-show").append(`<h3>${questionnaire["name"]} Questionnaire</h3> <hr>`)
+      $("#questionnaire-show").append(`<div class="questionnaire_div" id="${questionnaire["id"]}">`)
+      $(".questionnaire_div").append(`<h3>${questionnaire["name"]} Questionnaire</h3> <hr>
+      <h4>Owned by: ${questionnaire["user"]["name"]}</h4>`)
+      if (questionnaire["questions"].length === 0) {
+        $(".questionnaire_div").append("<h4>No questions yet!</h4>")
+      }
       $.each(questionnaire["questions"], function(index, question) {
-        debugger
+        var question_obj = new Question(question["body"], question["category"]["name"],
+          question["questionnaire"]["name"], question["questionnaire"]["id"],
+          question["id"]);
+        $(".questionnaire_div").append(question_obj.display() + "<hr />")
       })
+      $(".questionnaire_div").append("</div>")
     })
-  })
+  }
 </script>
 <script type="text/javascript">
   var question_num = 0;
@@ -28,5 +54,22 @@
     $("#questionnaire_questions_category_id").attr('name', `questionnaire[questions][category_id][${question_num}]`)
     $("#questionnaire_questions_category_id").attr('id', `questionnaire_questions_category_id_${question_num}`)
     question_num++;
+  })
+</script>
+
+<script type="text/javascript">
+  $(function() {
+    var questionnaire_id = <%= @questionnaire.id %>
+    load_questionnaire(questionnaire_id)
+    $("#questionnaire-next").on('click', function(data) {
+      var questionnaire_id = parseInt($(".questionnaire_div").attr('id'))
+      $("#" + questionnaire_id).remove()
+      load_questionnaire(questionnaire_id - 1);
+    })
+    $("#questionnaire-back").on('click', function(data) {
+      var questionnaire_id = parseInt($(".questionnaire_div").attr('id'))
+      $("#" + questionnaire_id).remove()
+      load_questionnaire(questionnaire_id + 1);
+    })
   })
 </script>
