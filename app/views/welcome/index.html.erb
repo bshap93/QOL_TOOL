@@ -14,28 +14,42 @@
   <%= link_to "All my Questionnaires", questionnaires_path, id: "questionnaire-index" %> <hr>
   <%= link_to "Create a New Questionnaire", new_questionnaire_path %> <hr>
   <%= link_to "See my Past Results", questionnaire_results_path(Questionnaire.last) %> <hr>
-  <div id="questionnaires-list">
+  <div id="questionnaires-list" data-current-user-id="<%= current_user.id %>">
 
   </div>
+
 <% end %>
 
 <script type="text/javascript">
   $("#questionnaire-index").on('click', function(event) {
     event.preventDefault();
+
     $.ajax({
       url: '/questionnaires',
       type: 'GET'
     }).done(function(questionnaires) {
       $("#questionnaires-list").append(`<h2>Questionnaires List</h2>`)
-      for (var i = (questionnaires.length - 1), l =0; i >= l; i--) {
-        //debugger
-        $("#questionnaires-list").append(`
-          <p>${questionnaires[i]["name"]}</p>
-          <p>User: ${questionnaires[i]["user"]["name"]}</p>
-          <a href="/questionnaires/${i + 1}/edit">Edit</a> | <a href="/questionnaires/${i + 1}">Go to Questions</a>
-          <hr />
-        `)
-      }
+      questionnaires
+        .sort((a, b) => {
+          var nameA = a.name.toUpperCase()
+          var nameB = b.name.toUpperCase()
+          if (nameA > nameB) {
+            return 1;
+          }
+          if (nameA < nameB) {
+            return -1
+          }
+          return 0;
+        })
+        .forEach(question => {
+          debugger;
+          $("#questionnaires-list").append(`
+            <p>${question.name}</p>
+            <p>User: ${question.user.name}</p>
+            <a href="/questionnaires/${question.id}/edit">Edit</a> | <a href="/questionnaires/${question.id}">Go to Questions</a>
+            <hr />
+          `)
+        })
     })
   })
 </script>
